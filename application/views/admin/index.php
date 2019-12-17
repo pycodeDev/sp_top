@@ -30,6 +30,8 @@
     <link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/icon/feather/css/feather.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/icon/font-awesome/css/font-awesome.min.css">
+    <!-- Data Tables -->
+    <link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/datatables/datatables.min.css">
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/css/jquery.mCustomScrollbar.css">
@@ -109,7 +111,7 @@
                             </div>
                         </div>
                         <a href="index.html">
-                            <img class="img-fluid" src="assets/images/logo.png" alt="Theme-Logo" />
+                            <img class="img-fluid" src="<?=base_url()?>assets/images/logo.png" alt="Theme-Logo" />
                         </a>
                         <a class="mobile-options waves-effect waves-light">
                             <i class="ti-more"></i>
@@ -129,7 +131,7 @@
                         <ul class="nav-right">
                             <li class="user-profile header-notification">
                                 <a href="#!" class="waves-effect waves-light">
-                                    <img src="assets/images/man.svg" class="img-radius" style="border:1px solid" alt="User-Profile-Image">
+                                    <img src="<?=base_url()?>assets/images/man.svg" class="img-radius" style="border:1px solid" alt="User-Profile-Image">
                                     <span><?=$this->session->userdata('nama')?></span>
                                     <i class="ti-angle-down"></i>
                                 </a>
@@ -173,7 +175,7 @@
                         <div class="pcoded-inner-navbar main-menu">
                             <div class="">
                                 <div class="main-menu-header">
-                                    <img class="img-80 img-radius" src="assets/images/man.svg" alt="User-Profile-Image">
+                                    <img class="img-80 img-radius" src="<?=base_url()?>assets/images/man.svg" alt="User-Profile-Image">
                                     <div class="user-details">
                                         <span id="more-details"><?= $this->session->userdata("nama") ?>
                                         <!-- <i class="fa fa-caret-down"></i> -->
@@ -204,7 +206,7 @@
                             <div class="pcoded-navigation-label">Kelola</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="">
-                                    <a href="index.html" class="waves-effect waves-dark">
+                                    <a href="<?=base_url()?>admin/kriteria" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                                         <span class="pcoded-mtext">Kriteria</span>
                                         <span class="pcoded-mcaret"></span>
@@ -362,6 +364,13 @@
     <script src="<?=base_url();?>assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
     <!-- Custom js -->
     <script type="text/javascript" src="<?=base_url();?>assets/js/script.min.js"></script>
+    <!-- Datatables js -->
+    <script type="text/javascript" src="<?=base_url();?>assets/datatables/datatables.min.js"></script>
+    <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+        } );
+    </script>
 </body>
 
 </html>
