@@ -35,6 +35,7 @@
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/css/jquery.mCustomScrollbar.css">
+    
 </head>
 
 <body>
@@ -196,7 +197,7 @@
                             <div class="pcoded-navigation-label">Navigation</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="">
-                                    <a href="index.html" class="waves-effect waves-dark">
+                                    <a href="<?=base_url()?>admin/" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                                         <span class="pcoded-mtext">Dashboard</span>
                                         <span class="pcoded-mcaret"></span>
@@ -207,21 +208,21 @@
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="">
                                     <a href="<?=base_url()?>admin/kriteria" class="waves-effect waves-dark">
-                                        <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
+                                        <span class="pcoded-micon"><i class="fa fa-tasks"></i><b>D</b></span>
                                         <span class="pcoded-mtext">Kriteria</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
                                 <li class="">
-                                    <a href="index.html" class="waves-effect waves-dark">
-                                        <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
+                                    <a href="<?=base_url()?>admin/sub_kriteria" class="waves-effect waves-dark">
+                                        <span class="pcoded-micon"><i class="fa fa-clipboard"></i><b>D</b></span>
                                         <span class="pcoded-mtext">Sub Kriteria</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
                                 <li class="">
-                                    <a href="index.html" class="waves-effect waves-dark">
-                                        <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
+                                    <a href="<?=base_url()?>admin/alternatif" class="waves-effect waves-dark">
+                                        <span class="pcoded-micon"><i class="fa fa-list-alt"></i><b>D</b></span>
                                         <span class="pcoded-mtext">alternatif</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
@@ -231,7 +232,7 @@
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="">
                                     <a href="form-elements-component.html" class="waves-effect waves-dark">
-                                        <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+                                        <span class="pcoded-micon"><i class="fa fa-play"></i><b>FC</b></span>
                                         <span class="pcoded-mtext">Eksekusi</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
@@ -241,21 +242,21 @@
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="">
                                     <a href="form-elements-component.html" class="waves-effect waves-dark">
-                                        <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+                                        <span class="pcoded-micon"><i class="fa fa-file"></i><b>FC</b></span>
                                         <span class="pcoded-mtext">Lap. Kriteria</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
                                 <li class="">
                                     <a href="form-elements-component.html" class="waves-effect waves-dark">
-                                        <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+                                        <span class="pcoded-micon"><i class="fa fa-file"></i><b>FC</b></span>
                                         <span class="pcoded-mtext">Lap. Sub Krit</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
                                 <li class="">
                                     <a href="form-elements-component.html" class="waves-effect waves-dark">
-                                        <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+                                        <span class="pcoded-micon"><i class="fa fa-file"></i><b>FC</b></span>
                                         <span class="pcoded-mtext">Lap. Hasil</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
