@@ -68,7 +68,7 @@ class Alternatif extends CI_Controller {
 		if (!isset($id)) show_404();
 		$this->crud_model->d_rank($id);
 		$this->crud_model->d_has($id);
-		$this->crud_model->delete($id,'tb_alternatif','id_alternatif')
+		$this->crud_model->delete($id,'tb_alternatif','id_alternatif');
 		redirect(site_url('admin/alternatif'));
 	}
 }

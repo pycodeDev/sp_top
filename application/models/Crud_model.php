@@ -160,7 +160,7 @@ class Crud_model extends CI_Model
         }
     }
 
-    public function coba(){
+    public function topsis(){
         $id_alternatif = $this->db->select('id_alternatif')->group_by('id_alternatif')->get('tb_rank')->result_array();
         $b = [];
         for ($i=0; $i < sizeof($id_alternatif); $i++) { 
@@ -174,10 +174,28 @@ class Crud_model extends CI_Model
             array_push($b,$data);
         }
         $aaa = $this->topsis_lib->alg($b);
+        $alter = $this->db->select('a.id_alternatif,a.nama_alternatif')->join('tb_alternatif a', 'r.id_alternatif=a.id_alternatif', 'left')->group_by('id_alternatif')->get('tb_rank r')->result_array();
+        $hasil=array();
+        for ($i=0; $i < count($aaa); $i++) { 
+            array_push($hasil,array(
+                "id_alternatif" => $alter[$i]['id_alternatif'],
+                "nama_alternatif" => $alter[$i]['nama_alternatif'],
+                "hasil" => $aaa[$i]
+            ));
+            
+            $id_al = $alter[$i]['id_alternatif'];
+            $lo = $this->db->get_where("tb_hasil", ["id_alternatif" => $id_al])->num_rows();
 
-        // for ($i=0; $i < count($aaa); $i++) { 
-        //     array_push()
-        // } masukkan id alternatif
-        return $b;
+            $l = array(
+                "id_alternatif" => $alter[$i]['id_alternatif'],
+                "hasil" => $aaa[$i]
+            );
+            if ($lo >=1) {
+                $this->db->update("tb_hasil", $l, array("id_alternatif" => $id_al));
+            }else{
+                $this->db->insert('tb_hasil', $l);
+            }
+        } 
+        return $hasil;
     }
 }

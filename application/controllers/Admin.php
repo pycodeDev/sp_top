@@ -15,8 +15,13 @@ class Admin extends CI_Controller {
 		} else {
 			$user = $this->session->userdata('akses');
 			$data['title'] = 'Dashboard '.$user;
+			$data['loll'] = $this->db->select("a.id_alternatif,a.nama_alternatif,h.hasil")->join("tb_alternatif a","h.id_alternatif=a.id_alternatif","left")->order_by('hasil','desc')->get('tb_hasil h')->result_array();
+			$data['row_krit'] = $this->db->query("select * from tb_kriteria")->num_rows();
+			$data['row_subkrit'] = $this->db->query("select * from tb_sub_kriteria")->num_rows();
+			$data['row_alter'] = $this->db->query("select * from tb_alternatif")->num_rows();
+			$data['test'] = json_encode($data['loll']);
 		
-			$data['content'] = $this->load->view('admin/content/dashboard',NULL,TRUE);
+			$data['content'] = $this->load->view('admin/content/dashboard',$data,TRUE);
 			$this->load->view('admin/index',$data);
 		}
 	}
@@ -86,20 +91,23 @@ class Admin extends CI_Controller {
 
 	public function lol()
 	{
-		$data['a'] = $this->crud_model->coba();
+		$data['a'] = $this->crud_model->topsis();
 		$this->load->view('admin/debug',$data);
 	}
 	
 	public function hasil()
 	{
+		$this->crud_model->topsis();
 		if (empty($this->session->userdata('username')) and $this->session->userdata('akses') != 'admin') {
 			redirect('login');
 		} else {
 			$user = $this->session->userdata('akses');
 			$data['title'] = 'Hasil Perangkingan';
 			$data['kc'] = 'Hasil Rank';
-			// $data['er'] = $this->db->group_by('id_alternatif')->get('tb_rank')->num_rows();
-			// $data['variable'] = $this->crud_model->t_alter();
+			$data['rank'] = $this->db->join("tb_alternatif a","h.id_alternatif=a.id_alternatif","left")->order_by('hasil','desc')->get('tb_hasil h')->result();
+			$data['loll'] = $this->db->select("a.id_alternatif,a.nama_alternatif,h.hasil")->join("tb_alternatif a","h.id_alternatif=a.id_alternatif","left")->order_by('hasil','desc')->get('tb_hasil h')->result_array();
+			
+			$data['test'] = json_encode($data['loll']);
 		
 			$data['content'] = $this->load->view('admin/content/hasil',$data,TRUE);
 			$this->load->view('admin/index',$data);
@@ -134,5 +142,58 @@ class Admin extends CI_Controller {
 			$data['content'] = $this->load->view('admin/content/eksekusi',$data,TRUE);
 			$this->load->view('admin/index',$data);
 		}
+	}
+
+	public function lap_kriteria(){
+		if (empty($this->session->userdata('username')) and $this->session->userdata('akses') != 'admin') {
+			redirect('login');
+		} else {
+			$user = $this->session->userdata('akses');
+			$data['title'] = 'Data Kriteria';
+			$data['kc'] = 'kriteria';
+			$data['d_krit'] = $this->crud_model->get_all_data('tb_kriteria');
+			$data['total_d'] = $this->crud_model->total_rows('tb_kriteria');
+		
+			$data['content'] = $this->load->view('admin/content/lap_kriteria',$data,TRUE);
+			$this->load->view('admin/index',$data);
+		}
+	}
+	
+	public function lap_subkriteria(){
+		if (empty($this->session->userdata('username')) and $this->session->userdata('akses') != 'admin') {
+			redirect('login');
+		} else {
+			$user = $this->session->userdata('akses');
+			$data['title'] = 'Data Sub Kriteria';
+			$data['kc'] = 'sub kriteria';
+			$data['krit'] = $this->crud_model->get_all_data('tb_kriteria');
+		
+			$data['content'] = $this->load->view('admin/content/lap_subkrit',$data,TRUE);
+			$this->load->view('admin/index',$data);
+		}
+	}
+	
+	public function lap_rank(){
+		if (empty($this->session->userdata('username')) and $this->session->userdata('akses') != 'admin') {
+			redirect('login');
+		} else {
+			$user = $this->session->userdata('akses');
+			$data['title'] = 'Data Hasil Ranking';
+			$data['kc'] = 'Laporan Rank';
+			$data['rank'] = $this->db->join("tb_alternatif a","h.id_alternatif=a.id_alternatif","left")->order_by('hasil','desc')->get('tb_hasil h')->result();
+			$data['total_d'] = $this->crud_model->total_rows('tb_hasil');
+		
+			$data['content'] = $this->load->view('admin/content/lap_rank',$data,TRUE);
+			$this->load->view('admin/index',$data);
+		}
+	}
+
+	public function data_sub()
+	{
+        $postData = $this->input->post();
+        $t_sub_krit = $this->crud_model;
+        $lol  = $t_sub_krit->data_sub($postData);
+
+        echo json_encode($lol);
 	}
 }

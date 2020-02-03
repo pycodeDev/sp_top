@@ -113,7 +113,7 @@
                             </div>
                         </div>
                         <a href="index.html">
-                            <img class="img-fluid" src="<?=base_url()?>assets/images/logo.png" alt="Theme-Logo" />
+                            <img class="img-fluid" src="<?=base_url()?>assets/images/favicon.ico" alt="Theme-Logo" />
                         </a>
                         <a class="mobile-options waves-effect waves-light">
                             <i class="ti-more"></i>
@@ -138,26 +138,7 @@
                                     <i class="ti-angle-down"></i>
                                 </a>
                                 <ul class="show-notification profile-notification">
-                                    <li class="waves-effect waves-light">
-                                        <a href="#!">
-                                            <i class="ti-settings"></i> Settings
-                                        </a>
-                                    </li>
-                                    <li class="waves-effect waves-light">
-                                        <a href="user-profile.html">
-                                            <i class="ti-user"></i> Profile
-                                        </a>
-                                    </li>
-                                    <li class="waves-effect waves-light">
-                                        <a href="email-inbox.html">
-                                            <i class="ti-email"></i> My Messages
-                                        </a>
-                                    </li>
-                                    <li class="waves-effect waves-light">
-                                        <a href="auth-lock-screen.html">
-                                            <i class="ti-lock"></i> Lock Screen
-                                        </a>
-                                    </li>
+                                    
                                     <li class="waves-effect waves-light">
                                         <a href="<?=base_url();?>login/logout">
                                             <i class="ti-layout-sidebar-left"></i> Logout
@@ -241,22 +222,22 @@
                             </ul>
                             <div class="pcoded-navigation-label">Laporan</div>
                             <ul class="pcoded-item pcoded-left-item">
-                                <li class="">
-                                    <a href="form-elements-component.html" class="waves-effect waves-dark">
+                                <li class="<?=$this->uri->segments[2] == 'lap_kriteria' ? "active" : ""?>">
+                                    <a href="<?=base_url()?>admin/lap_kriteria" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="fa fa-file"></i><b>FC</b></span>
                                         <span class="pcoded-mtext">Lap. Kriteria</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
-                                <li class="">
-                                    <a href="form-elements-component.html" class="waves-effect waves-dark">
+                                <li class="<?=$this->uri->segments[2] == 'lap_subkriteria' ? "active" : ""?>">
+                                    <a href="<?=base_url()?>admin/lap_subkriteria" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="fa fa-file"></i><b>FC</b></span>
                                         <span class="pcoded-mtext">Lap. Sub Krit</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
-                                <li class="">
-                                    <a href="form-elements-component.html" class="waves-effect waves-dark">
+                                <li class="<?=$this->uri->segments[2] == 'lap_rank' ? "active" : ""?>">
+                                    <a href="<?=base_url()?>admin/lap_rank" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="fa fa-file"></i><b>FC</b></span>
                                         <span class="pcoded-mtext">Lap. Hasil</span>
                                         <span class="pcoded-mcaret"></span>
@@ -268,7 +249,7 @@
                     <div class="pcoded-content">
                         <!-- Page-header start -->
                         <div class="page-header">
-                            <div class="page-block">
+                            <!-- <div class="page-block">
                                 <div class="row align-items-center">
                                     <div class="col-md-8">
                                         <div class="page-header-title">
@@ -286,7 +267,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <!-- Page-header end -->
                         <div class="pcoded-inner-content">
@@ -384,30 +365,15 @@
                 get_data(id);
                 // console.log(id);
 		    });
-            areaChart();
-        } );
+            
+            $("#lapsub_krit").click(function(){
+			    var test = $("#lapsub").val();
+                get_datalapsub(test);
+                console.log(test);
+		    });
 
-        function areaChart() {
-            window.areaChart = Morris.Area({
-                element: 'area-example',
-                data: [
-                    { y: '2006', a: 100, b: 90 },
-                    { y: '2007', a: 75, b: 65 },
-                    { y: '2008', a: 50, b: 40 },
-                    { y: '2009', a: 75, b: 65 },
-                    { y: '2010', a: 50, b: 40 },
-                    { y: '2011', a: 75, b: 65 },
-                    { y: '2012', a: 100, b: 90 }
-                ],
-                xkey: 'y',
-                resize: true,
-                redraw: true,
-                ykeys: ['a', 'b'],
-                labels: ['Series A', 'Series B'],
-                lineColors: ['#93EBDD', '#64DDBB']
-            });
-            console.log(data);
-        }
+            showGraph();
+        } );
 
         function get_data(id){
             console.log(id);
@@ -454,6 +420,108 @@
             }
             });
         }
+        
+        function get_datalapsub(id){
+            console.log(id);
+        $.ajax({
+            type: "POST",
+            url: "<?=base_url()?>admin/data_sub",
+            data: {id:id},
+            dataType: 'json',
+            success: function(data){
+                    var len = data.length;
+                    var no = 1;
+                    var hasil =[];
+                    if (len > 0) {
+                        for (var i= 0; i < len; i++) {
+                        
+                        var row = $('<tr>' +
+                                    '<td>' + no + '</td>' +
+                                    '<td>' + data[i].nama_sub_kriteria + '</td>' +
+                                    '<td>' + data[i].nama_kriteria + '</td>' + 
+                                    '<td>' + data[i].jenis_kriteria + '</td>');
+                        
+                        hasil.push(row);
+                        no=no+1;
+                        console.log(data)
+                    }
+                    $('#lapsubkrit tbody').html(hasil);
+
+                    var id_krit = data[0].id_kriteria;
+                    var a = '<a href="<?=base_url()?>lap_subkriteria/act_p/'+ id +'" id="btn_print" class="btn btn-sm btn-success text-white"><i class="fa fa-print"></i></a>';
+                    $('#btn_print').html(a);
+                    $("#btn_print").show();
+                    console.log(id_krit)
+                    }else{
+                        $('#lapsubkrit tbody').html('<td colspan="5" align="center">Data Tidak Ada</td>');
+                        $("#btn_print").hide();
+                    }
+            },
+            error: function() {
+                $('#dt tbody').html('<td colspan="5" align="center">Error</td>');
+            }
+            });
+        }
+        
+        <?php 
+        if ($this->uri->segments[2] == 'hasil') {?>
+            function showGraph()
+            {
+                {
+                    $.post("<?php echo site_url('admin/hasil')?>",
+                    function (data)
+                    {
+                        console.log(<?=$test?>);
+                        window.areaChart = Morris.Area({
+                            element: 'coba',
+                            data: <?=$test?>,
+                            parseTime: false,
+                            xkey: 'nama_alternatif',
+                            resize: true,
+                            redraw: true,
+                            ykeys: ['hasil'],
+                            labels: ['Hasil'],
+                            lineColors: ['#93EBDD']
+                        });
+                });
+                }
+            }
+        <?php    
+        }else {
+            echo '';
+        }
+        ?>
+        
+        <?php 
+        if ($this->uri->segments[2] == 'home') {?>
+            function showGraph()
+            {
+                {
+                    $.post("<?php echo site_url('admin/home')?>",
+                    function (data)
+                    {
+                        console.log(<?=$test?>);
+                        window.areaChart = Morris.Area({
+                            element: 'coba',
+                            data: <?=$test?>,
+                            parseTime: false,
+                            xkey: 'nama_alternatif',
+                            resize: true,
+                            redraw: true,
+                            ykeys: ['hasil'],
+                            labels: ['Hasil'],
+                            lineColors: ['#93EBDD']
+                        });
+                });
+                }
+            }
+        <?php    
+        }else {
+            echo '';
+        }
+        ?>
+        
+        
         
     </script>
 </body>

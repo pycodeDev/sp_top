@@ -6,44 +6,43 @@
                     <div class="card">
                         <div class="card-header">
                             <h5><?= $title ?></h5>
+                            <div class="card-header-right">
+                                <a href="<?=base_url()?>kriteria/tambah_kriteria" class="btn btn-sm btn-primary py-2"><i class="fas fa fa-print text-white"></i></a>
+                            </div>
                         </div>
                         <div class="card-block">
-                            <table class="table">
+                            <table id="myTable" class="table">
                                 <thead>
                                     <tr>
-                                        <td>Rangking</td>
+                                        <td>Rank</td>
                                         <td>Nama Alternatif</td>
-                                        <td>Nilai</td>
+                                        <td>Hasil</td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php
                                 $no=1;
-                                foreach ($rank as $value):
+                                if ($total_d == 0) {?>
+                                    <tr>
+                                        <td colspan=4>Tidak Ada Data</td>
+                                    </tr>
+                                <?php    
+                                }else{
+                                    foreach ($rank as $val):
                                 ?>
                                     <tr>
                                         <td><?=$no++?></td>
-                                        <td><?=$value->nama_alternatif?></td>
-                                        <td><?=$value->hasil?></td>
+                                        <td><?=$val->nama_alternatif?></td>
+                                        <td><?=$val->hasil?></td>
                                     </tr>
                                 <?php
-                                endforeach;
+                                    endforeach;
+                                }
                                 ?>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>Perangkingan</h5>
-                            <span>Hasil Perangkingan</span>
-                        </div>
-                        <div class="card-block">
-                            <div id="coba"></div>
-                        </div>
-                    </div>
-                    
                 </div>
 
             </div>
