@@ -20,14 +20,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                <?php
+                                if ($total_d == 0) {?>
                                     <tr>
-                                        <td>1</td>
-                                        <td>sekolah</td>
+                                        <td colspan=3>Data Tidak Ada</td>
+                                    </tr>
+                                <?php
+                                }else{
+                                    $no=1;
+                                    foreach ($d_al as $val):
+                                ?>
+                                    <tr>
+                                        <td><?=$no++?></td>
+                                        <td><?=$val->nama_alternatif?></td>
                                         <td>
-                                            <a class="btn btn-warning btn-sm text-white"><i class="fa fa-pencil"></i> Edit</a>
-                                            <a class="btn btn-danger btn-sm text-white"><i class="fa fa-trash"></i> Hapus</a>
+                                            <a href="<?=base_url()?>alternatif/edit_alternatif/<?=$val->id_alternatif?>" class="btn btn-warning btn-sm text-white"><i class="fa fa-pencil"></i> Edit</a>
+                                            <a href="<?=base_url()?>alternatif/act_d/<?=$val->id_alternatif?>" class="btn btn-danger btn-sm text-white"><i class="fa fa-trash"></i> Hapus</a>
                                         </td>
                                     </tr>
+                                <?php
+                                    endforeach;
+                                }
+                                ?>
                                 </tbody>
                             </table>
                         </div>

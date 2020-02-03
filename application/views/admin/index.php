@@ -35,6 +35,7 @@
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/css/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" type="text/css" href="<?=base_url();?>assets/css/morris.js/css/morris.css">
     
 </head>
 
@@ -196,8 +197,8 @@
                             <div class="p-15 p-b-0"><!-- Tidak ada isi --></div>
                             <div class="pcoded-navigation-label">Navigation</div>
                             <ul class="pcoded-item pcoded-left-item">
-                                <li class="">
-                                    <a href="<?=base_url()?>admin/" class="waves-effect waves-dark">
+                                <li class="<?=$this->uri->segments[2] == 'home' ? "active" : ""?>" >
+                                    <a href="<?=base_url()?>admin/home" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="ti-home"></i><b>D</b></span>
                                         <span class="pcoded-mtext">Dashboard</span>
                                         <span class="pcoded-mcaret"></span>
@@ -206,21 +207,21 @@
                             </ul>
                             <div class="pcoded-navigation-label">Kelola</div>
                             <ul class="pcoded-item pcoded-left-item">
-                                <li class="">
+                                <li class="<?=$this->uri->segments[2] == 'kriteria' || $this->uri->segments[1] == 'kriteria' ? "active" : ""?>">
                                     <a href="<?=base_url()?>admin/kriteria" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="fa fa-tasks"></i><b>D</b></span>
                                         <span class="pcoded-mtext">Kriteria</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
-                                <li class="">
+                                <li class="<?=$this->uri->segments[2] == 'sub_kriteria' || $this->uri->segments[1] == 'sub_kriteria' ? "active" : ""?>">
                                     <a href="<?=base_url()?>admin/sub_kriteria" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="fa fa-clipboard"></i><b>D</b></span>
                                         <span class="pcoded-mtext">Sub Kriteria</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
-                                <li class="">
+                                <li class="<?=$this->uri->segments[2] == 'alternatif' || $this->uri->segments[1] == 'alternatif' ? "active" : ""?>">
                                     <a href="<?=base_url()?>admin/alternatif" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="fa fa-list-alt"></i><b>D</b></span>
                                         <span class="pcoded-mtext">alternatif</span>
@@ -230,8 +231,8 @@
                             </ul>
                             <div class="pcoded-navigation-label">Perangkingan</div>
                             <ul class="pcoded-item pcoded-left-item">
-                                <li class="">
-                                    <a href="form-elements-component.html" class="waves-effect waves-dark">
+                                <li class="<?=$this->uri->segments[2] == 'eksekusi' || $this->uri->segments[1] == 'eksekusi' ? "active" : ""?>">
+                                    <a href="<?=base_url()?>admin/eksekusi" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="fa fa-play"></i><b>FC</b></span>
                                         <span class="pcoded-mtext">Eksekusi</span>
                                         <span class="pcoded-mcaret"></span>
@@ -367,10 +368,93 @@
     <script type="text/javascript" src="<?=base_url();?>assets/js/script.min.js"></script>
     <!-- Datatables js -->
     <script type="text/javascript" src="<?=base_url();?>assets/datatables/datatables.min.js"></script>
+    <script src="<?=base_url();?>assets/js/raphael/raphael.min.js"></script>
+    <script src="<?=base_url();?>assets/js/morris.js/morris.js"></script>
+    <!-- <script src="<?=base_url();?>assets/pages/chart/morris/morris-custom-chart.js"></script> -->
     <script>
         $(document).ready( function () {
             $('#myTable').DataTable();
+
+            $(window).on("resize", function() {
+                window.areaChart.redraw();
+            });
+            
+            $("#sub_krit").click(function(){
+			    var id = $("#sub").val();
+                get_data(id);
+                // console.log(id);
+		    });
+            areaChart();
         } );
+
+        function areaChart() {
+            window.areaChart = Morris.Area({
+                element: 'area-example',
+                data: [
+                    { y: '2006', a: 100, b: 90 },
+                    { y: '2007', a: 75, b: 65 },
+                    { y: '2008', a: 50, b: 40 },
+                    { y: '2009', a: 75, b: 65 },
+                    { y: '2010', a: 50, b: 40 },
+                    { y: '2011', a: 75, b: 65 },
+                    { y: '2012', a: 100, b: 90 }
+                ],
+                xkey: 'y',
+                resize: true,
+                redraw: true,
+                ykeys: ['a', 'b'],
+                labels: ['Series A', 'Series B'],
+                lineColors: ['#93EBDD', '#64DDBB']
+            });
+            console.log(data);
+        }
+
+        function get_data(id){
+            console.log(id);
+        $.ajax({
+            type: "POST",
+            url: "<?=base_url()?>sub_kriteria/data_sub",
+            data: {id:id},
+            dataType: 'json',
+            success: function(data){
+                    var len = data.length;
+                    var no = 1;
+                    var hasil =[];
+                    if (len > 0) {
+                        for (var i= 0; i < len; i++) {
+                        
+                        var row = $('<tr>' +
+                                    '<td>' + no + '</td>' +
+                                    '<td>' + data[i].nama_sub_kriteria + '</td>' +
+                                    '<td>' + data[i].nama_kriteria + '</td>' + 
+                                    '<td>' + data[i].jenis_kriteria + '</td>');
+                        
+                        hasil.push(row);
+                        no=no+1;
+                        console.log(data)
+                    }
+                    $('#subkrit tbody').html(hasil);
+
+                    var id_krit = data[0].id_kriteria;
+                    var a = '<a href="<?=base_url()?>sub_kriteria/act_d/'+ id +'" id="btn_tambah" class="btn btn-sm btn-danger text-white">Hapus Data</a>';
+                    $('#btn_hapus').html(a);
+                    $("#btn_tambah").hide();
+                    $("#btn_hapus").show();
+                    console.log(id_krit)
+                    }else{
+                        var b = '<a href="<?=base_url()?>sub_kriteria/tambah_sub_kriteria/'+ id +'" class="btn btn-sm btn-success" style="color:#fff;">Tambah Data</a>';
+                        $('#subkrit tbody').html('<td colspan="5" align="center">Data Tidak Ada</td>');
+                        $("#btn_hapus").hide();
+                        $('#btn_tambah').html(b);
+                        $("#btn_tambah").show();
+                    }
+            },
+            error: function() {
+                $('#dt tbody').html('<td colspan="5" align="center">Error</td>');
+            }
+            });
+        }
+        
     </script>
 </body>
 

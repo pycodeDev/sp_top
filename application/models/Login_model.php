@@ -52,10 +52,10 @@ class Login_model extends CI_Model
                 if($user['jabatan'] == 'admin')
                 {
                     $this->session->set_userdata($data);
-                    redirect('admin');
+                    redirect('admin/home');
                 }else if($user['jabatan'] == 'manager'){
                     $this->session->set_userdata($data);
-                    redirect('manager');
+                    redirect('manager/home');
                 }
             }else{
                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Maaf Password Salah !</div>');

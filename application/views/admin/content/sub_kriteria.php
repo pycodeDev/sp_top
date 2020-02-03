@@ -7,44 +7,39 @@
                         <div class="card-header">
                             <h5><?= $title ?></h5>
                             <div class="card-header-left">
-                                <a href="<?=base_url()?>kriteria/tambah_kriteria" class="btn btn-sm btn-primary text-white">Tambah Data</a>
+                                <div id="btn_tambah"></div>
+                                <div id="btn_hapus"></div>
                             </div>
                         </div>
                         <div class="container my-2">
                             <div class="row">
                                 <div class="col-6">
-                                    <select class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
+                                    <select class="form-control" id="sub">
+                                        <?php
+                                        foreach ($krit as $var):?>
+                                            <option value="<?=$var->id_kriteria?>"><?=$var->nama_kriteria?></option>
+                                        <?php
+                                        endforeach;
+                                        ?>
                                     </select>
                                 </div>
                                 <div class="col-6">
-                                    <button class="btn btn-md btn-success">Cari</button>
+                                    <button id="sub_krit" class="btn btn-md btn-success">Cari</button>
                                 </div>
                             </div>
                         </div>
                         <div class="card-block">
-                            <table class="table">
+                            <table class="table" id="subkrit">
                                 <thead>
                                     <tr>
                                         <td>No</td>
                                         <td>Nama Kriteria</td>
+                                        <td>Nama Sub Kriteria</td>
                                         <td>Jenis Kriteria</td>
-                                        <td>aksi</td>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Anggaran</td>
-                                        <td>Cost</td>
-                                        <td>
-                                            <a class="btn btn-warning btn-sm text-white"><i class="fa fa-pencil"></i> Edit</a>
-                                            <a class="btn btn-danger btn-sm text-white"><i class="fa fa-trash"></i> Hapus</a>
-                                        </td>
-                                    </tr>
+                                    <td colspan="4"> Pilih Filter</td>
                                 </tbody>
                             </table>
                         </div>

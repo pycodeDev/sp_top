@@ -21,15 +21,29 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                <?php
+                                $no=1;
+                                if ($total_d == 0) {?>
                                     <tr>
-                                        <td>1</td>
-                                        <td>Anggaran</td>
-                                        <td>Cost</td>
+                                        <td colspan=4>Tidak Ada Data</td>
+                                    </tr>
+                                <?php    
+                                }else{
+                                    foreach ($d_krit as $val):
+                                ?>
+                                    <tr>
+                                        <td><?=$no++?></td>
+                                        <td><?=$val->nama_kriteria?></td>
+                                        <td><?=$val->jenis_kriteria?></td>
                                         <td>
-                                            <a class="btn btn-warning btn-sm text-white"><i class="fa fa-pencil"></i> Edit</a>
-                                            <a class="btn btn-danger btn-sm text-white"><i class="fa fa-trash"></i> Hapus</a>
+                                            <a href="<?=base_url()?>kriteria/edit_kriteria/<?=$val->id_kriteria?>" class="btn btn-warning btn-sm text-white"><i class="fa fa-pencil"></i> Edit</a>
+                                            <a href="<?=base_url()?>kriteria/act_d/<?=$val->id_kriteria?>" class="btn btn-danger btn-sm text-white"><i class="fa fa-trash"></i> Hapus</a>
                                         </td>
                                     </tr>
+                                <?php
+                                    endforeach;
+                                }
+                                ?>
                                 </tbody>
                             </table>
                         </div>
